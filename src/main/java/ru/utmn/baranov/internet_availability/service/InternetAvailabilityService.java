@@ -10,7 +10,7 @@ import ru.utmn.baranov.internet_availability.repository.InternetAvailabilityJdbc
 import java.util.Collection;
 import java.util.stream.StreamSupport;
 
-@Service
+//@Service
 public class InternetAvailabilityService {
 
     private final InternetAvailabilityCsvRepository csvRepository;

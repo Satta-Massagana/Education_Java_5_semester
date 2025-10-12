@@ -1,11 +1,21 @@
 package ru.utmn.baranov.internet_availability.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class InternetAvailabilityModel {
 
+    @Id
     private String countryOrArea;
+    @Column
     private String subregion;
+    @Column
     private String region;
+    @Column
     private Long internetUsers;
+    @Column
     private Long population;
 
     public String getCountryOrArea() {

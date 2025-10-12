@@ -4,15 +4,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.utmn.baranov.internet_availability.model.InternetAvailabilityModel;
+import ru.utmn.baranov.internet_availability.service.InternetAvailabilityJpaService;
 import ru.utmn.baranov.internet_availability.service.InternetAvailabilityService;
 
 @RestController
 @RequestMapping("/api/internet-availability")
 public class InternetAvailabilityController {
 
-    private final InternetAvailabilityService service;
+    //private final InternetAvailabilityService service;
 
-    public InternetAvailabilityController(InternetAvailabilityService internetAvailabilityService) {
+    private final InternetAvailabilityJpaService service;
+
+    public InternetAvailabilityController(InternetAvailabilityJpaService internetAvailabilityService) {
         this.service = internetAvailabilityService;
     }
 
