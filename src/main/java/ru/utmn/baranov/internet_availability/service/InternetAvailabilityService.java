@@ -1,25 +1,33 @@
 package ru.utmn.baranov.internet_availability.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.utmn.baranov.internet_availability.model.InternetAvailabilityModel;
+import ru.utmn.baranov.internet_availability.repository.CommonRepository;
 import ru.utmn.baranov.internet_availability.repository.InternetAvailabilityCsvRepository;
 import ru.utmn.baranov.internet_availability.repository.InternetAvailabilityJdbcRepository;
 
 import java.util.Collection;
 import java.util.stream.StreamSupport;
 
-//@Service
-public class InternetAvailabilityService {
+@Service
+@Profile({"CsvEngine", "JdbcEngine"})
+public class InternetAvailabilityService implements InternetAvailabilityServiceInterface {
 
-    private final InternetAvailabilityCsvRepository csvRepository;
-    private final InternetAvailabilityJdbcRepository jdbcRepository;
+    CommonRepository<InternetAvailabilityModel> csvRepository;
 
-    public InternetAvailabilityService(InternetAvailabilityCsvRepository csvRepository,
-                                       InternetAvailabilityJdbcRepository jdbcRepository) {
+    public InternetAvailabilityService(
+            CommonRepository<InternetAvailabilityModel> csvRepository,
+            @Qualifier("CsvRepository") CommonRepository<InternetAvailabilityModel> jdbcRepository
+    ) {
         this.csvRepository = csvRepository;
-        this.jdbcRepository = jdbcRepository;
+
+        if (jdbcRepository.getClass().equals(csvRepository.getClass())) {
+            return;
+        }
 
         if (jdbcRepository.count() == 0 && csvRepository.count() > 0) {
             Iterable<InternetAvailabilityModel> all = csvRepository.findAll();
@@ -29,30 +37,30 @@ public class InternetAvailabilityService {
     }
 
     public Iterable<InternetAvailabilityModel> getAll() {
-        return jdbcRepository.findAll();
+        return csvRepository.findAll();
     }
 
     public InternetAvailabilityModel getOne(String id) {
-        if (!jdbcRepository.exists(id))
+        if (!csvRepository.exists(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record not found");
-        return jdbcRepository.findById(id);
+        return csvRepository.findById(id);
     }
 
     public InternetAvailabilityModel add(InternetAvailabilityModel model) {
-        if (jdbcRepository.exists(model.getCountryOrArea()))
+        if (csvRepository.exists(model.getCountryOrArea()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Record already exists");
-        return jdbcRepository.save(model);
+        return csvRepository.save(model);
     }
 
     public void update(InternetAvailabilityModel model) {
-        if (!jdbcRepository.exists(model.getCountryOrArea()))
+        if (!csvRepository.exists(model.getCountryOrArea()))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record not found");
-        jdbcRepository.save(model);
+        csvRepository.save(model);
     }
 
     public void delete(String id) {
-        if (!jdbcRepository.exists(id))
+        if (!csvRepository.exists(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record not found");
-        jdbcRepository.delete(id);
+        csvRepository.delete(id);
     }
 }

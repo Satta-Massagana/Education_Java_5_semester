@@ -1,5 +1,7 @@
 package ru.utmn.baranov.internet_availability.service;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -7,7 +9,8 @@ import ru.utmn.baranov.internet_availability.model.InternetAvailabilityModel;
 import ru.utmn.baranov.internet_availability.repository.InternetAvailabilityJpaRepository;
 
 @Service
-public class InternetAvailabilityJpaService {
+@Profile("JpaEngine")
+public class InternetAvailabilityJpaService implements InternetAvailabilityServiceInterface {
 
     private final InternetAvailabilityJpaRepository repository;
 

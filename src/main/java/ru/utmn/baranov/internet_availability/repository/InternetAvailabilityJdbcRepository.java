@@ -1,5 +1,7 @@
 package ru.utmn.baranov.internet_availability.repository;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
+@Profile("JdbcEngine")
+@Primary
 public class InternetAvailabilityJdbcRepository implements CommonRepository<InternetAvailabilityModel> {
 
     private static final String SQL_INSERT = """

@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.utmn.baranov.internet_availability.model.InternetAvailabilityModel;
 
@@ -16,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository("CsvRepository")
+@Profile({"CsvEngine", "JdbcEngine"})
 public class InternetAvailabilityCsvRepository implements CommonRepository<InternetAvailabilityModel> {
 
     private final Map<String, InternetAvailabilityModel> records = new HashMap<>();
