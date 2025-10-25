@@ -1,11 +1,10 @@
 package ru.utmn.baranov.internet_availability.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.utmn.baranov.internet_availability.model.InternetAvailabilityModel;
-import ru.utmn.baranov.internet_availability.service.InternetAvailabilityJpaService;
-import ru.utmn.baranov.internet_availability.service.InternetAvailabilityService;
 import ru.utmn.baranov.internet_availability.service.InternetAvailabilityServiceInterface;
 
 @RestController
@@ -18,6 +17,7 @@ public class InternetAvailabilityController {
         this.service = internetAvailabilityService;
     }
 
+    @Operation(summary = "Возвращает все записи", description = "Работает быстро, так как записей не так много")
     @GetMapping
     public Iterable<InternetAvailabilityModel> getAll() {
         return service.getAll();

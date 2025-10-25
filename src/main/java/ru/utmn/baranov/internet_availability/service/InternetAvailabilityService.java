@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.utmn.baranov.internet_availability.model.InternetAvailabilityModel;
 import ru.utmn.baranov.internet_availability.repository.CommonRepository;
-import ru.utmn.baranov.internet_availability.repository.InternetAvailabilityCsvRepository;
-import ru.utmn.baranov.internet_availability.repository.InternetAvailabilityJdbcRepository;
 
 import java.util.Collection;
 import java.util.stream.StreamSupport;
