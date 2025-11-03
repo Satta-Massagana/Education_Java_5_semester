@@ -27,10 +27,10 @@ public class InternetAvailabilityService implements InternetAvailabilityServiceI
             return;
         }
 
-        if (jdbcRepository.count() == 0 && csvRepository.count() > 0) {
-            Iterable<InternetAvailabilityModel> all = csvRepository.findAll();
+        if (jdbcRepository.count() > 0 && csvRepository.count() == 0) {
+            Iterable<InternetAvailabilityModel> all = jdbcRepository.findAll();
             Collection<InternetAvailabilityModel> collection = StreamSupport.stream(all.spliterator(), false).toList();
-            jdbcRepository.save(collection);
+            csvRepository.save(collection);
         }
     }
 
