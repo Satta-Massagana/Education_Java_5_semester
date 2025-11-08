@@ -13,4 +13,6 @@ public interface InternetAvailabilityServiceInterface {
     void update(InternetAvailabilityModel model);
 
     void delete(String id);
+
+    Long avgInternetUsers();
 }

@@ -44,4 +44,9 @@ public class InternetAvailabilityJpaService implements InternetAvailabilityServi
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record not found");
         repository.deleteById(id);
     }
+
+    @Override
+    public Long avgInternetUsers() {
+        return repository.getAvgInternetUsers();
+    }
 }

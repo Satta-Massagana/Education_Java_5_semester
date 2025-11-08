@@ -45,4 +45,9 @@ public class InternetAvailabilityController {
     public void delete(@PathVariable("id") String id) {
         service.delete(id);
     }
+
+    @GetMapping("/avg")
+    public Long avgInternetUsers() {
+        return service.avgInternetUsers();
+    }
 }

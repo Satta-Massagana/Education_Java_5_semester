@@ -61,4 +61,11 @@ public class InternetAvailabilityService implements InternetAvailabilityServiceI
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record not found");
         csvRepository.delete(id);
     }
+
+    @Override
+    public Long avgInternetUsers() {
+        var targetStream = StreamSupport.stream(csvRepository.findAll().spliterator(), false);
+        var result = targetStream.mapToLong(e -> e.getInternetUsers()).average();
+        return result.isPresent() ? Math.round(result.getAsDouble()) : null;
+    }
 }
