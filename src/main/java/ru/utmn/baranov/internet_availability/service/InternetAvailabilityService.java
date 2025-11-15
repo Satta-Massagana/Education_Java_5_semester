@@ -22,7 +22,10 @@ public class InternetAvailabilityService implements InternetAvailabilityServiceI
             @Qualifier("CsvRepository") CommonRepository<InternetAvailabilityModel> jdbcRepository
     ) {
         this.csvRepository = csvRepository;
+        init(csvRepository);
+    }
 
+    void init(CommonRepository<InternetAvailabilityModel> jdbcRepository) {
         if (jdbcRepository.getClass().equals(csvRepository.getClass())) {
             return;
         }
